@@ -1,0 +1,68 @@
+Sub zx()
+'
+'
+Dim sN, eN, rN, i, j
+sN = 23
+eN = 85
+Clum = 2
+Row = 99999
+'Int((upperbound - lowerbound + 1) * Rnd + lowerbound)
+'Rnd :0-1
+'Cells(i, clum).Interior.ColorIndex = 2
+'sD 2020.08.26 16:11:32
+Dim dV, tV, t, t1
+dV = "2020/08/26"
+tV = "16:11:32"
+mV = 1 'Time Interval- mins
+sV = 0.1 'Time Interval- s
+
+rN = 0.5 + Round((Rnd - 0.5) / 10, 3)  'Temperature Interval -
+    For i = 1 To Row
+        If Cells(i, Clum) >= sN And Cells(i + 1, Clum) = eN Then
+            Cells(i, Clum + 1) = Cells(i, Clum) + 0.5 + Round((Rnd - 0.5) / 10, 3)
+            For k = i To (eN - sN) * 2 - 1
+                If Cells(k, Clum) = eN Then
+                    Exit For
+                End If
+                Cells(k + 1, Clum).Select
+                ActiveSheet.Rows(Selection.Row).Insert
+                'Selection.Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+                Cells(k + 1, Clum) = Cells(k, Clum) + 0.5
+                Cells(k + 1, Clum + 1) = Cells(k, Clum) + 0.5 + Round((Rnd - 0.5) / 10, 3)
+                'Cells(k + 1, clum + 2) = Round((Rnd - 0.5) / 10, 3)
+            Next k
+            
+          ElseIf Cells(i, Clum) = eN And Cells(i + 1, Clum) <= sN Then
+            'MsgBox (i)
+            For j = i To i + (eN - sN) * 2
+                If Cells(j, Clum) = sN Then
+                    Cells(j + 1, Clum).Select
+                    ActiveSheet.Rows(Selection.Row).Delete
+                    Exit For
+                End If
+                Cells(j + 1, Clum).Select
+                ActiveSheet.Rows(Selection.Row).Insert
+                'Selection.Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+                Cells(j + 1, Clum) = Cells(j, Clum) - 0.5
+                Cells(j + 1, Clum + 1) = Cells(j, Clum) - 0.5 + Round((Rnd - 0.5) / 10, 3)
+            Next j
+      End If
+    Next i
+    'Columns(1).Delete
+    'Columns(1).Insert
+    Columns(1).ClearContents
+    t1 = DateValue(dV) + TimeValue(tV)
+    For t = 1 To Row
+        If Cells(t, Clum) <> 0 And Cells(t, Clum + 1) <> 0 Then
+            'For t1 = DateValue(dV) + TimeValue(tV) To DateValue("2008/03/03") + TimeValue("20:00")
+            Cells(t, Clum - 1) = t1
+            t1 = t1 + (mV + sV / 60) / (24 * 60)
+        End If
+    Next t
+    Columns("A:A").Select
+    Selection.NumberFormat = "yyyy/mm/dd hh:mm:ss"    'Time text formatting
+    ActiveWorkbook.Save ' Save
+
+                    
+End Sub
+
