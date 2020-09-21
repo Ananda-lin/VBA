@@ -44,14 +44,14 @@ rN = 0.5 + Round((Rnd - 0.5) / 10, 3)  'Temperature Interval -
                 ActiveSheet.Rows(Selection.Row).Insert
                 'Selection.Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
                 Cells(j + 1, Clum) = Cells(j, Clum) - 0.5
-                Cells(j + 1, Clum + 1) = Cells(j, Clum) - 0.4 + Round((Rnd - 0.5) / 10, 3)
+                Cells(j + 1, Clum + 1) = Cells(j, Clum) - 0.3 + Round((Rnd - 0.5) / 10, 3)
             Next j
       End If
     Next i
-    'Columns(1).Delete
-    'Columns(1).Insert
-    
-    'Add Date Time
+'    Columns(1).Delete
+'    Columns(1).Insert
+'
+'    Add Date Time
     Columns(1).ClearContents
     t1 = DateValue(dV) + TimeValue(tV)
     For t = 1 To Row
